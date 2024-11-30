@@ -1,6 +1,4 @@
-﻿using IncapSys.Models.Usuarios;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace IncapSys.ViewModels
 {

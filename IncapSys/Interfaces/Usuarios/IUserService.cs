@@ -1,7 +1,7 @@
 ﻿using IncapSys.Helpers;
 using IncapSys.Models.Usuarios;
 
-namespace IncapSys.Services.Interfaces
+namespace IncapSys.Interfaces.Usuarios
 {
     public interface IUserService : IBaseInterface<Empleados>
     {

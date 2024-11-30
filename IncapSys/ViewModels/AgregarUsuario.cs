@@ -1,6 +1,4 @@
-﻿using IncapSys.Models.Incapacidades;
-using IncapSys.Models.Rol;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿
 using System.ComponentModel.DataAnnotations;
 
 namespace IncapSys.ViewModels
