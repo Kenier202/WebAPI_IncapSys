@@ -1,4 +1,11 @@
+using IncapSys.Interfaces.Incapacidades;
+using IncapSys.Interfaces.Usuarios;
 using IncapSys.Models;
+using IncapSys.Models.Incapacidades;
+using IncapSys.Models.Usuarios;
+using IncapSys.Repositories;
+using IncapSys.Services.IncapacidadesServices;
+using IncapSys.Services.UsuariosServices;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +21,14 @@ builder.Services.AddDbContext<ApplicationDbContext>(op =>
 {
     op.UseSqlServer(builder.Configuration.GetConnectionString("SQLServer"));
 });
+
+//usuarios interface
+builder.Services.AddScoped<IUsuarioService, UsuariosService>();
+builder.Services.AddScoped<IUsuariosRepository<Empleados>, UsuarioRepositoryService>();
+
+//incapacidades interface
+builder.Services.AddScoped<IIncapacidadesService, IncapacidadesService>();
+builder.Services.AddScoped<IIncapacidadesRepository<DescripcionIncapacidad>, IncapacidadRepositoryService>();
 
 var app = builder.Build();
 
