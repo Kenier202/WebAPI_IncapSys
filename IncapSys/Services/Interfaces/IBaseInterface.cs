@@ -2,7 +2,7 @@
 
 namespace IncapSys.Services.Interfaces
 {
-    public interface BaseInterface<T> 
+    public interface IBaseInterface<T> 
     {
         //get all incapacidades
         public Task<Response<IEnumerable<T>>> getAll();
