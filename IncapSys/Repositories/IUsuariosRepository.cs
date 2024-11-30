@@ -1,12 +1,15 @@
-﻿namespace IncapSys.Repositories
+﻿using IncapSys.Helpers;
+
+namespace IncapSys.Repositories
+
 {
     public interface IUsuariosRepository<T>
     {
-        public Task<IEnumerable<T>> GetAllUsuarios();
-        public Task<T> GetUsuarioById(int id);
-        public Task<T> AddUsuario(T incapacidad);
-        public Task<T> DeleteUsuario(int id);
-        public Task<T> UpdateUsuario(T incapacidad);
+        public Task<Response<IEnumerable<T>>> GetAllUsuarios();
+        public Task<Response<T>> GetUsuarioById(int id);
+        public Task<Response<T>> AddUsuario(T incapacidad);
+        public Task<Response<T>> DeleteUsuario(int id);
+        public Task<Response<T>> UpdateUsuario(T incapacidad);
         public Task Save();
     }
 }
