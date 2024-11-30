@@ -29,7 +29,20 @@ namespace IncapSys.Services.UsuariosServices
             };
         }
 
+        async Task<Response<Empleados>> IUsuariosRepository<Empleados>.GetUsuarioById(int id)
+        {
+            var usuarios = await _DbContext.Usuarios.FindAsync(id);
 
+            if (usuarios == null) return null;
+
+            return new Response<Empleados>
+            {   
+                IsSucces = true,
+                Message = "Usuario encontrado",
+                Result = usuarios,
+            };
+
+        }
 
         Task<Response<Empleados>> IUsuariosRepository<Empleados>.AddUsuario(Empleados incapacidad)
         {
@@ -41,10 +54,7 @@ namespace IncapSys.Services.UsuariosServices
             throw new NotImplementedException();
         }
 
-        Task<Response<Empleados>> IUsuariosRepository<Empleados>.GetUsuarioById(int id)
-        {
-            throw new NotImplementedException();
-        }
+   
 
         Task IUsuariosRepository<Empleados>.Save()
         {
