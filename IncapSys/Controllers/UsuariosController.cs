@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace IncapTrack.Controllers
+namespace IncapSys.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
