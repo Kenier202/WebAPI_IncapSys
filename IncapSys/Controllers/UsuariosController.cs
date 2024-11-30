@@ -1,5 +1,4 @@
 ﻿using IncapSys.Interfaces.Usuarios;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IncapSys.Controllers
@@ -21,6 +20,16 @@ namespace IncapSys.Controllers
             }
             return StatusCode(StatusCodes.Status204NoContent, response);
 
+        }
+
+        [HttpGet("{id}")]
+        async public Task<IActionResult> GetUsersById(int id)
+        {
+            var response = await _UsuarioService.GetById(id);
+            if (response.IsSucces) {
+                return StatusCode(StatusCodes.Status200OK, response);
+            }
+            return StatusCode(StatusCodes.Status404NotFound, response);
         }
     }
 }
