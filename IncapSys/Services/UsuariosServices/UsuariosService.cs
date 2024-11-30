@@ -15,9 +15,9 @@ namespace IncapSys.Services.UsuariosServices
 
         async Task<Response<IEnumerable<Empleados>>> IBaseInterface<Empleados>.getAll()
         {
-            var usuariosResponse = await _repositoryService.GetAllUsuarios();
+            var _usuariosResponse = await _repositoryService.GetAllUsuarios();
 
-            if (usuariosResponse == null) return new Response<IEnumerable<Empleados>>
+            if (_usuariosResponse == null) return new Response<IEnumerable<Empleados>>
             {
                 Message = "Usuarios no encontrados",
                 Result = null,
@@ -26,14 +26,34 @@ namespace IncapSys.Services.UsuariosServices
 
             return new Response<IEnumerable<Empleados>>
             {
-                IsSucces = usuariosResponse  != null,
-                Message = usuariosResponse != null ? "Se han encontrado usuarios" : "No hay resultados",
-                Result = usuariosResponse.Result
+                IsSucces = _usuariosResponse != null,
+                Message = _usuariosResponse != null ? "Se han encontrado usuarios" : "No hay resultados",
+                Result = _usuariosResponse.Result
             };
         }
-        Task<Response<Empleados>> IBaseInterface<Empleados>.Actualizar(Empleados model)
+
+        async Task<Response<Empleados>> IBaseInterface<Empleados>.GetById(int id)
+        {
+            var _usuariosResponse = await _repositoryService.GetUsuarioById(id);
+
+            if (_usuariosResponse == null) return new Response<Empleados> {
+                Message = "Usuario no encontrado",
+                Result = null,
+                IsSucces = false
+            };
+
+
+            return new Response<Empleados> {
+                IsSucces = true,
+                Message = "usuario encontrado",
+                Result = _usuariosResponse.Result,
+            };
+        }
+
+        async Task<Response<Empleados>> IBaseInterface<Empleados>.Actualizar(Empleados model)
         {
             throw new NotImplementedException();
+
         }
 
         Task<Response<Empleados>> IBaseInterface<Empleados>.CreateAt(Empleados model)
@@ -52,10 +72,5 @@ namespace IncapSys.Services.UsuariosServices
         }
 
 
-
-        Task<Response<Empleados>> IBaseInterface<Empleados>.GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
