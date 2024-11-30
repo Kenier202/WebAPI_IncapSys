@@ -1,4 +1,4 @@
-﻿namespace IncapSys.DTOs
+﻿namespace IncapSys.DTOs.Incapacidades
 {
     public class IncapacidadesDTO
     {
