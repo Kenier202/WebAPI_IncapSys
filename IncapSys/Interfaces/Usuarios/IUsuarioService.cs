@@ -3,7 +3,7 @@ using IncapSys.Models.Usuarios;
 
 namespace IncapSys.Interfaces.Usuarios
 {
-    public interface IUserService : IBaseInterface<Empleados>
+    public interface IUsuarioService : IBaseInterface<Empleados>
     {
         Task<Response<bool>> ExisteUsuario(int idUsuario);
 
