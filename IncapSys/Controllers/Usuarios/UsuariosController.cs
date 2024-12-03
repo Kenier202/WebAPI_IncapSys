@@ -1,18 +1,22 @@
-﻿using IncapSys.Interfaces.Usuarios;
+﻿using IncapSys.DTOs.Usuarios;
+using IncapSys.Interfaces.Usuarios;
+using IncapSys.Models.Usuarios;
 using Microsoft.AspNetCore.Mvc;
 
-namespace IncapSys.Controllers
+namespace IncapSys.Controllers.Usuarios
 {
     [Route("api/[controller]")]
     [ApiController]
     public class UsuariosController : ControllerBase
     {
         public readonly IUsuarioService _UsuarioService;
-        public UsuariosController(IUsuarioService _usuarios) {
-            this._UsuarioService = _usuarios;
+        public UsuariosController(IUsuarioService _usuarios)
+        {
+            _UsuarioService = _usuarios;
         }
         [HttpGet]
-        async public Task<IActionResult> GetAll() {
+        async public Task<IActionResult> GetAll()
+        {
             var response = await _UsuarioService.getAll();
             if (response.IsSucces)
             {
@@ -26,7 +30,19 @@ namespace IncapSys.Controllers
         async public Task<IActionResult> GetUsersById(int id)
         {
             var response = await _UsuarioService.GetById(id);
-            if (response.IsSucces) {
+            if (response.IsSucces)
+            {
+                return StatusCode(StatusCodes.Status200OK, response);
+            }
+            return StatusCode(StatusCodes.Status404NotFound, response);
+        }
+
+        [HttpPost]
+        async public Task<IActionResult> CreateAt(UsuarioAddDTO usuario)
+        {
+            var response = await _UsuarioService.CreateAt(usuario);
+            if (response.IsSucces)
+            {
                 return StatusCode(StatusCodes.Status200OK, response);
             }
             return StatusCode(StatusCodes.Status404NotFound, response);
