@@ -10,7 +10,6 @@ namespace IncapSys.Repositories
         public Task<Response<T>> AddUsuario(T incapacidad);
         public Task<Response<T>> DeleteUsuario(int id);
         public Task<Response<T>> UpdateUsuario(T incapacidad);
-        public Task Save();
     }
 }
     

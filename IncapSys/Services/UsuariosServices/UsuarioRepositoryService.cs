@@ -44,26 +44,36 @@ namespace IncapSys.Services.UsuariosServices
 
         }
 
-        Task<Response<Empleados>> IUsuariosRepository<Empleados>.AddUsuario(Empleados incapacidad)
+        async Task<Response<Empleados>> IUsuariosRepository<Empleados>.AddUsuario(Empleados usuario)
         {
-            throw new NotImplementedException();
+            if (usuario == null) return new Response<Empleados> {
+                IsSucces = false,
+                Message = "Los datos enviados son erroneos",
+                Result = null,
+            };
+
+            var usuarios = await _DbContext.AddAsync(usuario);
+            await _DbContext.SaveChangesAsync();
+
+            return new Response<Empleados>{
+             IsSucces = true,
+             Message = "Usuario registrado con exito",
+             Result = usuario
+            };
         }
+
 
         Task<Response<Empleados>> IUsuariosRepository<Empleados>.DeleteUsuario(int id)
         {
             throw new NotImplementedException();
         }
 
-   
 
-        Task IUsuariosRepository<Empleados>.Save()
-        {
-            throw new NotImplementedException();
-        }
 
         Task<Response<Empleados>> IUsuariosRepository<Empleados>.UpdateUsuario(Empleados incapacidad)
         {
             throw new NotImplementedException();
         }
+    
     }
 }
