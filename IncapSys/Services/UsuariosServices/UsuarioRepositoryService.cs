@@ -69,7 +69,39 @@ namespace IncapSys.Services.UsuariosServices
              Result = usuario
             };
         }
+        async Task<Response<Empleados>> IUsuariosRepository<Empleados>.UpdateUsuario(Empleados usuario)
+        {
+            if (usuario == null) return new Response<Empleados>
+            {
+                IsSucces = false,
+                Message = "Los datos enviados son erroneos",
+                Result = null,
+            };
 
+            try
+            {
+                _DbContext.Attach(usuario);
+                _DbContext.Entry(usuario).State = EntityState.Modified;
+
+                var result = await _DbContext.SaveChangesAsync();
+
+                return new Response<Empleados>{
+                    IsSucces = true,
+                    Message = "Usuario actualizado con exito",
+                    Result = usuario,
+                };
+
+            }
+            catch (Exception ex) {
+                return new Response<Empleados>
+                {
+                    IsSucces = false,
+                    Message = ex.Message,
+                    Result = null,
+                };
+            }
+            
+        }
 
         async Task<Response<Empleados>> IUsuariosRepository<Empleados>.DeleteUsuario(int id)
         {
@@ -117,12 +149,7 @@ namespace IncapSys.Services.UsuariosServices
             }
         }
 
-
-
-        Task<Response<Empleados>> IUsuariosRepository<Empleados>.UpdateUsuario(Empleados incapacidad)
-        {
-            throw new NotImplementedException();
-        }
+  
     
     }
 }
