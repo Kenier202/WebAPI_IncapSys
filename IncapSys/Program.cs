@@ -30,6 +30,8 @@ builder.Services.AddScoped<IUsuariosRepository<Empleados>, UsuarioRepositoryServ
 builder.Services.AddScoped<IIncapacidadesService, IncapacidadesService>();
 builder.Services.AddScoped<IIncapacidadesRepository<DescripcionIncapacidad>, IncapacidadRepositoryService>();
 
+builder.Services.AddAutoMapper(typeof(MappingProfileUsuarios)); 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
