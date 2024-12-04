@@ -16,25 +16,29 @@ namespace IncapSys.Services.UsuariosServices
         async Task<Response<IEnumerable<Empleados>>> IUsuariosRepository<Empleados>.GetAllUsuarios()
         {
             var usuarios = await _DbContext.Usuarios
-                                          .Include(e => e.Rol)  // Asegúrate de incluir el rol
-                                          .Include(e => e.Incapacidades)  // Si también necesitas incluir las incapacidades
+                                          .Include(e => e.Rol)  
+                                          .Include(e => e.Incapacidades) 
                                           .ToListAsync();
 
-            if (usuarios == null) return null;
+            if (usuarios == null || !usuarios.Any()) return new Response<IEnumerable<Empleados>>
+            {
+                IsSucces = false,
+                Message = "Usuarios no encontrados",
+                Result = usuarios
+            };
 
             return new Response<IEnumerable<Empleados>> { 
                 IsSucces = usuarios.Any(),
-                Message = usuarios.Any() ? "Usuarios encontrados" : "Usuarios no encontrados",
+                Message = "Usuarios encontrados",
                 Result = usuarios
             };
         }
 
         async Task<Response<Empleados>> IUsuariosRepository<Empleados>.GetUsuarioById(int id)
         {
-            //var usuarios = await _DbContext.Usuarios.FindAsync(id);
             var usuarios = await _DbContext.Usuarios
-                                 .Include(e => e.Rol)  // Asegúrate de incluir el rol
-                                 .Include(e => e.Incapacidades)  // Si también necesitas incluir las incapacidades
+                                 .Include(e => e.Rol)  
+                                 .Include(e => e.Incapacidades) 
                                  .FirstOrDefaultAsync(u => u.Id == id);
 
             if (usuarios == null) return null;
@@ -79,9 +83,9 @@ namespace IncapSys.Services.UsuariosServices
             try
             {
                 var usuario = await _DbContext.Usuarios
-                                         .Include(e => e.Rol) // Incluir la relación con Rol
-                                         .Include(e => e.Incapacidades) // Incluir la relación con Incapacidades
-                                         .FirstOrDefaultAsync(u => u.Id == id); // Filtrar por el ID
+                                         .Include(e => e.Rol) 
+                                         .Include(e => e.Incapacidades) 
+                                         .FirstOrDefaultAsync(u => u.Id == id); 
 
                 if (usuario == null)
                 {

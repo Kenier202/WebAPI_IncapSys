@@ -87,9 +87,9 @@ namespace IncapSys.Services.UsuariosServices
 
             if (_usuariosResponse == null) return new Response<IEnumerable<Empleados>>
             {
-                Message = "Usuarios no encontrados",
-                Result = null,
-                IsSucces = false
+                Message = _usuariosResponse.Message,
+                Result = _usuariosResponse.Result,
+                IsSucces = _usuariosResponse.IsSucces
             };
 
             return new Response<IEnumerable<Empleados>>
