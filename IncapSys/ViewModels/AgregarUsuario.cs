@@ -1,5 +1,6 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace IncapSys.ViewModels
 {
@@ -11,7 +12,7 @@ namespace IncapSys.ViewModels
         [MinLength(1, ErrorMessage = "Debe tener mas de 1 letras o numeros")]
         public string Contraseña { get; set; }
         [MinLength(1, ErrorMessage = "Debe tener mas de 1 numero")]
-        [Required]
+        [JsonRequired]
         public int RolId { get; set; }
 
     }
