@@ -31,7 +31,11 @@ namespace IncapSys.Services.UsuariosServices
 
         async Task<Response<Empleados>> IUsuariosRepository<Empleados>.GetUsuarioById(int id)
         {
-            var usuarios = await _DbContext.Usuarios.FindAsync(id);
+            //var usuarios = await _DbContext.Usuarios.FindAsync(id);
+            var usuarios = await _DbContext.Usuarios
+                                 .Include(e => e.Rol)  // Asegúrate de incluir el rol
+                                 .Include(e => e.Incapacidades)  // Si también necesitas incluir las incapacidades
+                                 .FirstOrDefaultAsync(u => u.Id == id);
 
             if (usuarios == null) return null;
 
