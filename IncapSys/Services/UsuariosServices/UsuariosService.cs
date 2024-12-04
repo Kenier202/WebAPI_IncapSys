@@ -45,9 +45,35 @@ namespace IncapSys.Services.UsuariosServices
             };
         }
 
-        public Task<Response<Empleados>> Delete(int id)
+        async public Task<Response<Empleados>> Delete(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var usuario = await _repositoryService.DeleteUsuario(id);
+
+                if (usuario == null) return new Response<Empleados>
+                {
+                    IsSucces = usuario.IsSucces,
+                    Message = usuario.Message,
+                    Result = usuario.Result
+                };
+
+                return new Response<Empleados>
+                {
+                    IsSucces = usuario.IsSucces,
+                    Message = usuario.Message,
+                    Result = usuario.Result
+                };
+            }
+            catch (Exception ex) {
+                return new Response<Empleados>
+                {
+                    IsSucces = false,
+                    Message = ex.Message,
+                    Result = null,
+                };
+            }
+
         }
 
         public Task<Response<bool>> ExisteUsuario(int idUsuario)
