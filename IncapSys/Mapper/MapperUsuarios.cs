@@ -2,10 +2,13 @@
 using IncapSys.DTOs.Usuarios;
 using IncapSys.ViewModels;
 
-public class MappingProfileUsuarios : Profile
+namespace IncapSys.MappingProfiles 
 {
-    public MappingProfileUsuarios()
+    public class MappingProfileUsuarios : Profile
     {
-        CreateMap<AgregarUsuario, UsuarioAddDto>();
+        public MappingProfileUsuarios()
+        {
+            CreateMap<AgregarUsuario, UsuarioAddDto>();
+        }
     }
 }
