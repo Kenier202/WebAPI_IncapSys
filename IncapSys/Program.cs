@@ -27,8 +27,8 @@ builder.Services.AddScoped<IUsuarioService, UsuariosService>();
 builder.Services.AddScoped<IUsuariosRepository<Empleados>, UsuarioRepositoryService>();
 
 //incapacidades interface
-builder.Services.AddScoped<IIncapacidadesService, IncapacidadesService>();
-builder.Services.AddScoped<IIncapacidadesRepository<DescripcionIncapacidad>, IncapacidadRepositoryService>();
+builder.Services.AddScoped<IIncapacidadesService, IncapacidadesServices>();
+builder.Services.AddScoped<IIncapacidadesRepository<DescripcionIncapacidad>, IncapacidadesRepositoryService>();
 
 builder.Services.AddAutoMapper(typeof(MappingProfileUsuarios)); 
 

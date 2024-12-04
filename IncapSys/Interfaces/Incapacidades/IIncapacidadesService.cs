@@ -1,8 +1,9 @@
-﻿using IncapSys.Models.Incapacidades;
+﻿using IncapSys.DTOs.Usuarios;
+using IncapSys.Models.Incapacidades;
 
 namespace IncapSys.Interfaces.Incapacidades
 {
-    public interface IIncapacidadesService : IBaseInterface<DescripcionIncapacidad>
+    public interface IIncapacidadesService : IBaseInterface<DescripcionIncapacidad, UsuarioAddDTO>
     {
     }
 }
