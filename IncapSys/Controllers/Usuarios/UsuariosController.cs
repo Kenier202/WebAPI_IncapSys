@@ -53,5 +53,23 @@ namespace IncapSys.Controllers.Usuarios
             }
             return StatusCode(StatusCodes.Status404NotFound, response);
         }
+
+        [HttpDelete("{id}")]
+        async public Task<IActionResult> DeleteUsuario( int id)
+        {
+            try
+            {
+                var response = await _UsuarioService.Delete(id);
+
+                if (!response.IsSucces) {
+                    return StatusCode(StatusCodes.Status200OK, response);
+                }
+                return StatusCode(StatusCodes.Status404NotFound, response);
+            }
+            catch (Exception ex) {
+                return StatusCode(StatusCodes.Status404NotFound);
+            }
+        }
+
     }
 }
