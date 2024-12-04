@@ -11,6 +11,7 @@ namespace IncapSys.ViewModels
         [MinLength(1, ErrorMessage = "Debe tener mas de 1 letras o numeros")]
         public string Contraseña { get; set; }
         [MinLength(1, ErrorMessage = "Debe tener mas de 1 numero")]
+        [Required]
         public int RolId { get; set; }
 
     }
