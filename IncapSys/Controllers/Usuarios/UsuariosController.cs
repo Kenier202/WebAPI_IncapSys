@@ -44,9 +44,9 @@ namespace IncapSys.Controllers.Usuarios
         [HttpPost]
         async public Task<IActionResult> CreateAt([FromBody] AgregarUsuario usuario)
         {
-            var usuarioDto = _MappingUsuarios.Map<UsuarioAddDTO>(usuario);
+            var UsuarioDto = _MappingUsuarios.Map<UsuarioAddDto>(usuario);
 
-            var response = await _UsuarioService.CreateAt(usuarioDto);
+            var response = await _UsuarioService.CreateAt(UsuarioDto);
             if (response.IsSucces)
             {
                 return StatusCode(StatusCodes.Status200OK, response);

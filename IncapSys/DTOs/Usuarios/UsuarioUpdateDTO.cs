@@ -1,6 +1,6 @@
 ﻿namespace IncapSys.DTOs.Usuarios
 {
-    public class UsuarioUpdateDTO
+    public class UsuarioUpdateDto
     {
         public int Id { get; set; }
         public string Usuario { get; set; }

@@ -6,6 +6,6 @@ public class MappingProfileUsuarios : Profile
 {
     public MappingProfileUsuarios()
     {
-        CreateMap<AgregarUsuario, UsuarioAddDTO>();
+        CreateMap<AgregarUsuario, UsuarioAddDto>();
     }
 }

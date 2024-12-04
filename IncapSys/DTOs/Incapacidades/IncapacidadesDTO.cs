@@ -1,6 +1,6 @@
 ﻿namespace IncapSys.DTOs.Incapacidades
 {
-    public class IncapacidadesDTO
+    public class IncapacidadesDto
     {
         public int Id { get; set; }
         public string LugarAccidente { get; set; }

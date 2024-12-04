@@ -14,12 +14,12 @@ namespace IncapSys.Services.UsuariosServices
             this._repositoryService = _UsuariosRepository;
         }
 
-        public Task<Response<Empleados>> Actualizar(UsuarioAddDTO model)
+        public Task<Response<Empleados>> Actualizar(UsuarioAddDto model)
         {
             throw new NotImplementedException();
         }
 
-        async public Task<Response<Empleados>> CreateAt(UsuarioAddDTO model)
+        async public Task<Response<Empleados>> CreateAt(UsuarioAddDto model)
         {
             var Usuario = new Empleados() {
                 Usuario = model.Usuario,
