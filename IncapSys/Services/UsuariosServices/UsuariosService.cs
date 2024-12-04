@@ -32,7 +32,7 @@ namespace IncapSys.Services.UsuariosServices
 
             if (NewUsuario == null) return new Response<Empleados>
             {
-                IsSucces = NewUsuario.IsSucces,
+                IsSucces = NewUsuario!.IsSucces,
                 Message = NewUsuario.Message,
                 Result = NewUsuario.Result
             };
@@ -70,7 +70,7 @@ namespace IncapSys.Services.UsuariosServices
             {
                 IsSucces = _usuariosResponse != null,
                 Message = _usuariosResponse != null ? "Se han encontrado usuarios" : "No hay resultados",
-                Result = _usuariosResponse.Result
+                Result = _usuariosResponse!.Result
             };
         }
 
