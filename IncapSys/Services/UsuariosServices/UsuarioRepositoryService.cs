@@ -52,7 +52,7 @@ namespace IncapSys.Services.UsuariosServices
                 Result = null,
             };
 
-            var usuarios = await _DbContext.AddAsync(usuario);
+            await _DbContext.AddAsync(usuario);
             await _DbContext.SaveChangesAsync();
 
             return new Response<Empleados>{
