@@ -63,9 +63,50 @@ namespace IncapSys.Services.UsuariosServices
         }
 
 
-        Task<Response<Empleados>> IUsuariosRepository<Empleados>.DeleteUsuario(int id)
+        async Task<Response<Empleados>> IUsuariosRepository<Empleados>.DeleteUsuario(int id)
         {
-            throw new NotImplementedException();
+            if (id == 0) return new Response<Empleados>
+            {
+                IsSucces = false,
+                Message = "Los datos enviados son erroneos",
+                Result = null,
+            };
+
+            try
+            {
+                var usuario = await _DbContext.Usuarios
+                                         .Include(e => e.Rol) // Incluir la relación con Rol
+                                         .Include(e => e.Incapacidades) // Incluir la relación con Incapacidades
+                                         .FirstOrDefaultAsync(u => u.Id == id); // Filtrar por el ID
+
+                if (usuario == null)
+                {
+                    return new Response<Empleados> { 
+                        IsSucces = false,
+                        Message = "Usuario no encontrado",
+                        Result = null!
+                    };
+                }
+
+                _DbContext.Remove(usuario!);
+                await _DbContext.SaveChangesAsync();
+
+                return new Response<Empleados>
+                {
+                    IsSucces = true,
+                    Message = "Usuario eliminado con exito",
+                    Result = usuario,
+                };
+
+            }
+            catch (Exception ex) {
+                return new Response<Empleados>
+                {
+                   IsSucces = false,
+                   Message = ex.Message,
+                   Result = null
+                };
+            }
         }
 
 
