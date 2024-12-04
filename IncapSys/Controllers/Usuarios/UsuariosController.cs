@@ -1,6 +1,8 @@
-﻿using IncapSys.DTOs.Usuarios;
+﻿using AutoMapper;
+using IncapSys.DTOs.Usuarios;
 using IncapSys.Interfaces.Usuarios;
 using IncapSys.Models.Usuarios;
+using IncapSys.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IncapSys.Controllers.Usuarios
@@ -10,9 +12,11 @@ namespace IncapSys.Controllers.Usuarios
     public class UsuariosController : ControllerBase
     {
         public readonly IUsuarioService _UsuarioService;
-        public UsuariosController(IUsuarioService _usuarios)
+        public readonly IMapper _MappingUsuarios;
+        public UsuariosController(IUsuarioService _usuarios, IMapper mappingUsuarios)
         {
             _UsuarioService = _usuarios;
+            _MappingUsuarios = mappingUsuarios;
         }
         [HttpGet]
         async public Task<IActionResult> GetAll()
@@ -38,9 +42,11 @@ namespace IncapSys.Controllers.Usuarios
         }
 
         [HttpPost]
-        async public Task<IActionResult> CreateAt(UsuarioAddDTO usuario)
+        async public Task<IActionResult> CreateAt([FromBody] AgregarUsuario usuario)
         {
-            var response = await _UsuarioService.CreateAt(usuario);
+            var usuarioDto = _MappingUsuarios.Map<UsuarioAddDTO>(usuario);
+
+            var response = await _UsuarioService.CreateAt(usuarioDto);
             if (response.IsSucces)
             {
                 return StatusCode(StatusCodes.Status200OK, response);
