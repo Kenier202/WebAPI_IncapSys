@@ -10,9 +10,7 @@ namespace IncapSys.ViewModels
         public string Usuario { get; set; }
         [MinLength(1, ErrorMessage = "Debe tener mas de 1 letras o numeros")]
         public string Contraseña { get; set; }
-        [MinLength(1, ErrorMessage = "Debe tener mas de 1 numero")]
-        [JsonRequired]
+        [Required]
         public int RolId { get; set; }
-
     }
 }
