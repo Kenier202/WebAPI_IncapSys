@@ -1,4 +1,5 @@
-﻿using IncapSys.DTOs.Usuarios;
+﻿using AutoMapper;
+using IncapSys.DTOs.Usuarios;
 using IncapSys.Helpers;
 using IncapSys.Interfaces.Usuarios;
 using IncapSys.Models.Usuarios;
@@ -9,14 +10,45 @@ namespace IncapSys.Services.UsuariosServices
     public class UsuariosService : IUsuarioService
     {
         private readonly IUsuariosRepository<Empleados> _repositoryService;
-        public UsuariosService(IUsuariosRepository<Empleados> _UsuariosRepository)
+        private readonly IMapper _MappingUsuarios;
+        public UsuariosService(IUsuariosRepository<Empleados> _UsuariosRepository, IMapper mappingUsuarios)
         {
             this._repositoryService = _UsuariosRepository;
+            this._MappingUsuarios = mappingUsuarios;
         }
 
-        public Task<Response<Empleados>> Actualizar(UsuarioAddDto model)
+        async public Task<Response<Empleados>> Actualizar(UsuarioAddDto model)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var usuario = _MappingUsuarios.Map<Empleados>(model);
+
+                var response = await _repositoryService.UpdateUsuario(usuario);
+
+                if (response == null) return new Response<Empleados>
+                {
+                    IsSucces = response!.IsSucces,
+                    Message = response.Message,
+                    Result = response.Result
+                };
+
+                return new Response<Empleados>
+                {
+                    IsSucces = response!.IsSucces,
+                    Message = response.Message,
+                    Result = response.Result
+                };
+
+            }
+            catch (Exception ex) {
+                return new Response<Empleados>
+                {
+                    IsSucces = false,
+                    Message = ex.Message,
+                    Result = null,
+                };
+            }
+
         }
 
         async public Task<Response<Empleados>> CreateAt(UsuarioAddDto model)
