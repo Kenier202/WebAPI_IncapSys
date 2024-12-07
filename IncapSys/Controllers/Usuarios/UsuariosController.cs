@@ -74,7 +74,7 @@ namespace IncapSys.Controllers.Usuarios
         [HttpPut]
         async public Task<IActionResult> UpdateUsuario([FromBody] ActualizarUsuario usuario)
         {
-            var UsuarioDto = _MappingUsuarios.Map<UsuarioAddDto>(usuario);
+            var UsuarioDto = _MappingUsuarios.Map<UsuarioUpdateDto>(usuario);
             var response = await  _UsuarioService.Actualizar(UsuarioDto);
          
             if (response.IsSucces)
