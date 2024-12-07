@@ -71,5 +71,18 @@ namespace IncapSys.Controllers.Usuarios
             }
         }
 
+        [HttpPut]
+        async public Task<IActionResult> UpdateUsuario([FromBody] ActualizarUsuario usuario)
+        {
+            var UsuarioDto = _MappingUsuarios.Map<UsuarioAddDto>(usuario);
+            var response = await  _UsuarioService.Actualizar(UsuarioDto);
+         
+            if (response.IsSucces)
+            {
+                return StatusCode(StatusCodes.Status200OK, response);
+            }
+            return StatusCode(StatusCodes.Status404NotFound, response);
+        }
+
     }
 }
