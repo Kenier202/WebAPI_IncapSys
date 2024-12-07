@@ -80,7 +80,7 @@ namespace IncapSys.Services.UsuariosServices
 
             try
             {
-                _DbContext.Attach(usuario);
+                _DbContext.Usuarios.Attach(usuario);
                 _DbContext.Entry(usuario).State = EntityState.Modified;
 
                 var result = await _DbContext.SaveChangesAsync();
