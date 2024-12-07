@@ -8,7 +8,7 @@ namespace IncapSys.Services.IncapacidadesServices
 {
     public class IncapacidadesServices : IIncapacidadesService
     {
-        public Task<Response<DescripcionIncapacidad>> Actualizar(UsuarioAddDto model)
+        public Task<Response<DescripcionIncapacidad>> Actualizar(UsuarioUpdateDto model)
         {
             throw new NotImplementedException();
         }

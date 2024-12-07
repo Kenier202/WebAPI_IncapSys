@@ -17,7 +17,7 @@ namespace IncapSys.Services.UsuariosServices
             this._MappingUsuarios = mappingUsuarios;
         }
 
-        async public Task<Response<Empleados>> Actualizar(UsuarioAddDto model)
+        async public Task<Response<Empleados>> Actualizar(UsuarioUpdateDto model)
         {
             try
             {
