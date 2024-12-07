@@ -3,7 +3,7 @@ using IncapSys.Models.Incapacidades;
 
 namespace IncapSys.Interfaces.Incapacidades
 {
-    public interface IIncapacidadesService : IBaseInterface<DescripcionIncapacidad, UsuarioAddDto>
+    public interface IIncapacidadesService : IBaseInterface<DescripcionIncapacidad, UsuarioAddDto, UsuarioUpdateDto>
     {
     }
 }
