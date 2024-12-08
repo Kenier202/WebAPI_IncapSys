@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace IncapSys.Controllers.Usuarios
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class UsuariosController : ControllerBase
     {
