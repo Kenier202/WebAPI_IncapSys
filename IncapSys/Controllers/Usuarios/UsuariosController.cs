@@ -30,7 +30,7 @@ namespace IncapSys.Controllers.Usuarios
         }
 
         [HttpGet("{id}")]
-        async public Task<IActionResult> GetUsersById(int id)
+        async public Task<IActionResult> GetById(int id)
         {
             var response = await _UsuarioService.GetById(id);
             if (response.IsSucces)
@@ -63,7 +63,7 @@ namespace IncapSys.Controllers.Usuarios
                 if (!response.IsSucces) {
                     return StatusCode(StatusCodes.Status200OK, response);
                 }
-                return StatusCode(StatusCodes.Status404NotFound, response);
+                return StatusCode(StatusCodes.Status404NotFound, response); 
             }
             catch (Exception ex) {
                 return StatusCode(StatusCodes.Status404NotFound);
