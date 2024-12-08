@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using IncapSys.DTOs.Usuarios;
 using IncapSys.Models.Usuarios;
-using IncapSys.ViewModels;
+using IncapSys.ViewModels.Usuarios;
 
-namespace IncapSys.MappingProfiles 
+namespace IncapSys.Mapper.Usuarios
 {
     public class MappingProfileUsuarios : Profile
     {

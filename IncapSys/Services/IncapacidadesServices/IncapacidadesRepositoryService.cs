@@ -1,6 +1,6 @@
 ﻿using IncapSys.Models.Incapacidades;
 using IncapSys.Models.Usuarios;
-using IncapSys.Repositories;
+using IncapSys.Repositories.Incapacidades;
 
 namespace IncapSys.Services.IncapacidadesServices
 {

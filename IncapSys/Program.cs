@@ -1,10 +1,11 @@
 using IncapSys.Interfaces.Incapacidades;
 using IncapSys.Interfaces.Usuarios;
-using IncapSys.MappingProfiles;
+using IncapSys.Mapper.Usuarios;
 using IncapSys.Models;
 using IncapSys.Models.Incapacidades;
 using IncapSys.Models.Usuarios;
-using IncapSys.Repositories;
+using IncapSys.Repositories.Incapacidades;
+using IncapSys.Repositories.Usuarios;
 using IncapSys.Services.IncapacidadesServices;
 using IncapSys.Services.UsuariosServices;
 using Microsoft.EntityFrameworkCore;

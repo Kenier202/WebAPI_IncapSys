@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace IncapSys.ViewModels
+namespace IncapSys.ViewModels.Usuarios
 {
     public class ActualizarUsuario
     {

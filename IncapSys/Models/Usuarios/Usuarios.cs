@@ -14,7 +14,6 @@ namespace IncapSys.Models.Usuarios
         public string Contraseña { get; set; }
         public DateTime FechaRegistro { get; set; }
 
-
         [ForeignKey("RolId")]
         public int RolId { get; set; }
         public Roles Rol { get; set; }

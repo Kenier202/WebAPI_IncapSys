@@ -1,7 +1,7 @@
 ﻿using IncapSys.Helpers;
 using IncapSys.Models;
 using IncapSys.Models.Usuarios;
-using IncapSys.Repositories;
+using IncapSys.Repositories.Usuarios;
 using Microsoft.EntityFrameworkCore;
 
 namespace IncapSys.Services.UsuariosServices

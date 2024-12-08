@@ -3,7 +3,7 @@ using IncapSys.DTOs.Usuarios;
 using IncapSys.Helpers;
 using IncapSys.Interfaces.Usuarios;
 using IncapSys.Models.Usuarios;
-using IncapSys.Repositories;
+using IncapSys.Repositories.Usuarios;
 
 namespace IncapSys.Services.UsuariosServices
 {

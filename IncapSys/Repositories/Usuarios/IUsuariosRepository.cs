@@ -1,6 +1,6 @@
 ﻿using IncapSys.Helpers;
 
-namespace IncapSys.Repositories
+namespace IncapSys.Repositories.Usuarios
 
 {
     public interface IUsuariosRepository<T>
@@ -12,4 +12,3 @@ namespace IncapSys.Repositories
         public Task<Response<T>> UpdateUsuario(T incapacidad);
     }
 }
-    

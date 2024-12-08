@@ -1,4 +1,4 @@
-﻿namespace IncapSys.Repositories
+﻿namespace IncapSys.Repositories.Incapacidades
 {
     public interface IIncapacidadesRepository<T>
     {
@@ -8,6 +8,6 @@
         public Task<T> DeleteIncapacidad(int id);
         public Task<T> UpdateIncapacidad(T incapacidad);
         public Task Save();
-      
+
     }
 }

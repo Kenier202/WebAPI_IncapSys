@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace IncapSys.ViewModels
+namespace IncapSys.ViewModels.Usuarios
 {
     public class AgregarUsuario
     {

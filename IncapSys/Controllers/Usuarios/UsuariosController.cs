@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using IncapSys.DTOs.Usuarios;
 using IncapSys.Interfaces.Usuarios;
-using IncapSys.Models.Usuarios;
-using IncapSys.ViewModels;
+using IncapSys.ViewModels.Usuarios;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IncapSys.Controllers.Usuarios
