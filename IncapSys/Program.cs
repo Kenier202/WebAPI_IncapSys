@@ -32,6 +32,9 @@ builder.Services.AddScoped<IUsuariosRepository<Empleados>, UsuarioRepositoryServ
 builder.Services.AddScoped<IIncapacidadesService, IncapacidadesServices>();
 builder.Services.AddScoped<IIncapacidadesRepository<DescripcionIncapacidad>, IncapacidadesRepositoryService>();
 
+//roles interface
+
+
 builder.Services.AddAutoMapper(typeof(MappingProfileUsuarios)); 
 
 var app = builder.Build();

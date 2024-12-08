@@ -4,9 +4,11 @@ using IncapSys.Models.Usuarios;
 
 namespace IncapSys.Interfaces.Usuarios
 {
-    public interface IUsuarioService : IBaseInterface<Empleados, UsuarioAddDto, UsuarioUpdateDto>
+    public interface IUsuarioService : IBaseInterface<Empleados>
     {
         Task<Response<bool>> ExisteUsuario(int idUsuario);
+        public Task<Response<Empleados>> CreateAt(UsuarioAddDto model);
+        public Task<Response<Empleados>> Actualizar(UsuarioUpdateDto model);
 
     }
 }
