@@ -1,4 +1,5 @@
-﻿using IncapSys.Interfaces.Rol;
+﻿using IncapSys.DTOs.Rol;
+using IncapSys.Interfaces.Rol;
 using IncapSys.Services.RolServices;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,6 +34,17 @@ namespace IncapSys.Controllers.Rol
                 return StatusCode(StatusCodes.Status200OK, response);
             }
             return StatusCode(StatusCodes.Status404NotFound,response);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateAt(RolAddDto rolAdd) {
+        
+            var response = await _rolService.CreateAt(rolAdd);
+            if (response.IsSucces)
+            {
+                return StatusCode(StatusCodes.Status200OK, response);
+            }
+            return StatusCode(StatusCodes.Status404NotFound, response);
         }
     }
 }
