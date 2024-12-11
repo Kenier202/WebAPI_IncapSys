@@ -1,4 +1,5 @@
-﻿using IncapSys.DTOs.Rol;
+﻿using AutoMapper;
+using IncapSys.DTOs.Rol;
 using IncapSys.Helpers;
 using IncapSys.Interfaces.Rol;
 using IncapSys.Models.Rol;
@@ -11,8 +12,59 @@ namespace IncapSys.Services.RolServices
     public class RolService : IRolService
     {
         private readonly IRolRepository<Roles> _RolRepositoryService;
-        public RolService(IRolRepository<Roles> rolRepositoryService) {
+        private readonly IMapper _MappingRol;
+        public RolService(IRolRepository<Roles> rolRepositoryService, IMapper Mapper) {
             this._RolRepositoryService = rolRepositoryService;
+            this._MappingRol = Mapper;
+        }
+
+        public Task<Response<Roles>> Actualizar(RolUpdateDto model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Response<Roles>> CreateAt(RolAddDto rolAdd)
+        {
+            try
+            {
+                var rol = _MappingRol.Map<Roles>(rolAdd);
+                var response = await _RolRepositoryService.AddRol(rol);
+
+                if (!response.IsSucces)
+                {
+                    return new Response<Roles>
+                    {
+                        IsSucces = false,
+                        Message  = response.Message,
+                        Result   = response.Result
+                    };
+                }
+
+                return new Response<Roles> 
+                {
+                    IsSucces = response.IsSucces,
+                    Message = response.Message,
+                    Result = response.Result
+                };
+            }
+            catch (Exception ex) {
+                return new Response<Roles>
+                {
+                    IsSucces = false,
+                    Message  = ex.Message,
+                    Result   = null
+                };
+            }
+        }
+
+        public Task<Response<Roles>> Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Response<bool>> ExisteRol(int idUsuario)
+        {
+            throw new NotImplementedException();
         }
 
         async public Task<Response<IEnumerable<Roles>>> getAll()
@@ -73,28 +125,7 @@ namespace IncapSys.Services.RolServices
             }
         }
 
-        public Task<Response<Empleados>> Actualizar(RolUpdateDto model)
-        {
-            throw new NotImplementedException();
-        }
 
-        public Task<Response<Empleados>> CreateAt(RolAddDto model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Response<Roles>> Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Response<bool>> ExisteRol(int idUsuario)
-        {
-            throw new NotImplementedException();
-        }
-
-
-
-      
+    
     }
 }
