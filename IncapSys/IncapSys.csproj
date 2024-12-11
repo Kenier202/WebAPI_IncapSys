@@ -20,7 +20,6 @@
   <ItemGroup>
     <Folder Include="Mappers\" />
     <Folder Include="Mapper\Incapacidades\" />
-    <Folder Include="Mapper\Rol\" />
   </ItemGroup>
 
 </Project>
