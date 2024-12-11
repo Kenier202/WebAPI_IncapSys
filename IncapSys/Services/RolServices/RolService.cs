@@ -42,6 +42,37 @@ namespace IncapSys.Services.RolServices
             }
         }
 
+        public async Task<Response<Roles>> GetById(int id)
+        {
+            try
+            {
+                var response = await _RolRepositoryService.GetRolById(id);
+
+                if (response == null) return new Response<Roles>
+                {
+                    IsSucces = response.IsSucces,
+                    Message = response.Message,
+                    Result = response.Result
+                };
+
+                return new Response<Roles>
+                {
+                    IsSucces = response.IsSucces,
+                    Message = response.Message,
+                    Result = response.Result
+                };
+            }
+            catch (Exception ex) {
+                return new Response<Roles>
+                {
+                    IsSucces = false,
+                    Message = ex.Message,
+                    Result = null
+                };
+            
+            }
+        }
+
         public Task<Response<Empleados>> Actualizar(RolUpdateDto model)
         {
             throw new NotImplementedException();
@@ -64,9 +95,6 @@ namespace IncapSys.Services.RolServices
 
 
 
-        public Task<Response<Roles>> GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
+      
     }
 }
