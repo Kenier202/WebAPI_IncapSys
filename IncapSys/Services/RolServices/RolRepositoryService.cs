@@ -93,23 +93,83 @@ namespace IncapSys.Services.RolServices
                 };
             }
         }
-
-        public Task<Response<Roles>> AddRol(Roles incapacidad)
+ 
+        public async Task<Response<Roles>> AddRol(Roles rol)
         {
-            throw new NotImplementedException();
+            if (rol == null)
+            {
+                return new Response<Roles>
+                {
+                    IsSucces = false,
+                    Message = "El rol no puede ser nulo",
+                    Result = null
+                };
+            }
+
+            try
+            {
+                if (string.IsNullOrEmpty(rol.Name))
+                {
+                    return new Response<Roles>
+                    {
+                        IsSucces = false,
+                        Message = "El nombre del rol es obligatorio",
+                        Result = null
+                    };
+                }
+
+                await _DbContext.Roles.AddAsync(rol);
+                var result = await _DbContext.SaveChangesAsync();
+
+                if (result < 1)
+                {
+                    return new Response<Roles>
+                    {
+                        IsSucces = false,
+                        Message = "No se pudo agregar el rol a la base de datos",
+                        Result = null
+                    };
+                }
+
+                return new Response<Roles>
+                {
+                    IsSucces = true,
+                    Message = "Rol agregado exitosamente",
+                    Result = rol
+                };
+            }
+            catch (DbUpdateException dbEx)
+            {
+                return new Response<Roles>
+                {
+                    IsSucces = false,
+                    Message = $"Error al actualizar la base de datos: {dbEx.Message}",
+                    Result = null
+                };
+            }
+            catch (Exception ex)
+            {
+                // Manejo de errores generales
+                return new Response<Roles>
+                {
+                    IsSucces = false,
+                    Message = $"Ocurrió un error inesperado: {ex.Message}",
+                    Result = null
+                };
+            }
         }
+
 
         public Task<Response<Roles>> DeleteRol(int id)
         {
             throw new NotImplementedException();
         }
 
-
-
-
         public Task<Response<Roles>> UpdateRol(Roles incapacidad)
         {
             throw new NotImplementedException();
         }
+
+     
     }
 }
