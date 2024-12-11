@@ -16,12 +16,23 @@ namespace IncapSys.Controllers.Rol
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-                var response = await _rolService.getAll();
-                if (response.IsSucces)
-                {
-                    return StatusCode(StatusCodes.Status200OK, response);
-                }
-                return StatusCode(StatusCodes.Status204NoContent, response);
+            var response = await _rolService.getAll();
+            if (response.IsSucces)
+            {
+                return StatusCode(StatusCodes.Status200OK, response);
+            }
+            return StatusCode(StatusCodes.Status204NoContent, response);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var response = await _rolService.GetById(id);
+            if (response.IsSucces)
+            {
+                return StatusCode(StatusCodes.Status200OK, response);
+            }
+            return StatusCode(StatusCodes.Status404NotFound,response);
         }
     }
 }
