@@ -3,6 +3,7 @@ using IncapSys.Helpers;
 using IncapSys.Models;
 using IncapSys.Models.Rol;
 using IncapSys.Repositories.Rol;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace IncapSys.Services.RolServices
@@ -54,6 +55,44 @@ namespace IncapSys.Services.RolServices
 
         }
 
+        public async Task<Response<Roles>> GetRolById(int id)
+        {
+            try
+            {
+                var rol = await _DbContext.Roles.FirstOrDefaultAsync(x => x.Id == id);
+
+                if (rol == null) return new Response<Roles>
+                {
+                    IsSucces = false,
+                    Message = "Rol no encontrado",
+                    Result = null
+                };
+
+                return new Response<Roles>
+                {
+                    IsSucces = true,
+                    Message = "Rol encontrado",
+                    Result = rol
+                };
+
+            }
+            catch (DbUpdateException dbEx) {
+                return new Response<Roles>
+                {
+                    IsSucces = false,
+                    Message = dbEx.Message,
+                    Result = null
+                };
+            }
+            catch (Exception ex) {
+                return new Response<Roles>
+                {
+                    IsSucces = false,
+                    Message = ex.Message,
+                    Result = null
+                };
+            }
+        }
 
         public Task<Response<Roles>> AddRol(Roles incapacidad)
         {
@@ -66,10 +105,7 @@ namespace IncapSys.Services.RolServices
         }
 
 
-        public Task<Response<Roles>> GetRolById(int id)
-        {
-            throw new NotImplementedException();
-        }
+
 
         public Task<Response<Roles>> UpdateRol(Roles incapacidad)
         {
