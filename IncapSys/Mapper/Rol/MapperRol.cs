@@ -9,6 +9,9 @@ namespace IncapSys.Mapper.Rol
         public MapperRol() {
 
             CreateMap<RolAddDto, Roles>();
+            CreateMap<RolUpdateDto, Roles>();
+
+
         }
     }
 }

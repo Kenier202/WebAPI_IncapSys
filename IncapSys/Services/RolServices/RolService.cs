@@ -18,9 +18,35 @@ namespace IncapSys.Services.RolServices
             this._MappingRol = Mapper;
         }
 
-        public Task<Response<Roles>> Actualizar(RolUpdateDto model)
+        public async Task<Response<Roles>> Actualizar(RolUpdateDto UpdateRol)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var rol = _MappingRol.Map<Roles>(UpdateRol);
+                var response = await _RolRepositoryService.UpdateRol(rol);
+
+                if (!response.IsSucces) return new Response<Roles>
+                {
+                    IsSucces = false,
+                    Message  = response.Message,
+                    Result   = response.Result,
+                };
+
+                return new Response<Roles>
+                {
+                    IsSucces = response.IsSucces,
+                    Message = response.Message,
+                    Result = response.Result,
+                };
+            }
+            catch (Exception ex) {
+                return new Response<Roles>
+                {
+                    IsSucces = false,
+                    Message = ex.Message,
+                    Result = null
+                };
+            }
         }
 
         public async Task<Response<Roles>> CreateAt(RolAddDto rolAdd)

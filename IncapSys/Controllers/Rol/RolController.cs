@@ -42,7 +42,7 @@ namespace IncapSys.Controllers.Rol
             var response = await _rolService.CreateAt(rolAdd);
             if (response.IsSucces)
             {
-                return StatusCode(StatusCodes.Status200OK, response);
+                return CreatedAtAction(nameof(GetById), new {id = response.Result.Id}, response);
             }
             return StatusCode(StatusCodes.Status404NotFound, response);
         }
@@ -51,6 +51,17 @@ namespace IncapSys.Controllers.Rol
         public async Task<IActionResult> DeleteById(int id)
         {
             var response = await _rolService.Delete(id);
+            if (response.IsSucces)
+            {
+                return StatusCode(StatusCodes.Status200OK, response);
+            }
+            return StatusCode(StatusCodes.Status404NotFound, response);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateAt(RolUpdateDto UpdateRol)
+        {
+            var response = await _rolService.Actualizar(UpdateRol);
             if (response.IsSucces)
             {
                 return StatusCode(StatusCodes.Status200OK, response);
