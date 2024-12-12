@@ -149,7 +149,6 @@ namespace IncapSys.Services.RolServices
             }
             catch (Exception ex)
             {
-                // Manejo de errores generales
                 return new Response<Roles>
                 {
                     IsSucces = false,
@@ -195,7 +194,6 @@ namespace IncapSys.Services.RolServices
             }
             catch (Exception ex)
             {
-                // Manejo de errores generales
                 return new Response<Roles>
                 {
                     IsSucces = false,
@@ -203,16 +201,47 @@ namespace IncapSys.Services.RolServices
                     Result = null
                 };
             }
-
-
-
         }
 
-        public Task<Response<Roles>> UpdateRol(Roles incapacidad)
+        public async Task<Response<Roles>> UpdateRol(Roles UpdateRol)
         {
-            throw new NotImplementedException();
-        }
+            try
+            {
+                if (UpdateRol == null) return new Response<Roles>
+                {
+                    IsSucces = false,
+                    Message  = "Faltan datos",
+                    Result   = null
+                };
 
+                _DbContext.Roles.Attach(UpdateRol);
+                _DbContext.Entry(UpdateRol).State = EntityState.Modified;
+                int result = await _DbContext.SaveChangesAsync();
+
+                if (result == 0) return new Response<Roles>
+                {
+                    IsSucces = false,
+                    Message = "error al actualizar",
+                    Result = null
+                };
+
+                return new Response<Roles>
+                {
+                    IsSucces = true,
+                    Message = "Rol actualizado con exito",
+                    Result = UpdateRol
+                };
+            }
+            catch (Exception ex) {
+                return new Response<Roles>
+                {
+                    IsSucces = false,
+                    Message = $"Ocurrió un error inesperado: {ex.Message}",
+                    Result = null
+                };
+            }
+          
+        }
      
     }
 }
