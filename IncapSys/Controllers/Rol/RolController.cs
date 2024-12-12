@@ -46,5 +46,16 @@ namespace IncapSys.Controllers.Rol
             }
             return StatusCode(StatusCodes.Status404NotFound, response);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteById(int id)
+        {
+            var response = await _rolService.Delete(id);
+            if (response.IsSucces)
+            {
+                return StatusCode(StatusCodes.Status200OK, response);
+            }
+            return StatusCode(StatusCodes.Status404NotFound, response);
+        }
     }
 }
