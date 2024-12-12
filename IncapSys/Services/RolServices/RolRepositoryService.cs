@@ -160,9 +160,52 @@ namespace IncapSys.Services.RolServices
         }
 
 
-        public Task<Response<Roles>> DeleteRol(int id)
+        public async Task<Response<Roles>> DeleteRol(int id)
         {
-            throw new NotImplementedException();
+            var response = await _DbContext.Roles.FindAsync(id);
+
+            try
+            {
+                if (response == null) return new Response<Roles>
+                {
+                    IsSucces = false,
+                    Message  = "Rol no encontrado",
+                    Result   = null
+                };
+
+                _DbContext.Remove(response);
+                await _DbContext.SaveChangesAsync();
+
+
+                return new Response<Roles>
+                {
+                    IsSucces = true,
+                    Message = "Rol eliminado exitosamente",
+                    Result = response
+                };
+            }
+            catch (DbUpdateException dbEx)
+            {
+                return new Response<Roles>
+                {
+                    IsSucces = false,
+                    Message = $"Error al actualizar la base de datos: {dbEx.Message}",
+                    Result = null
+                };
+            }
+            catch (Exception ex)
+            {
+                // Manejo de errores generales
+                return new Response<Roles>
+                {
+                    IsSucces = false,
+                    Message = $"Ocurrió un error inesperado: {ex.Message}",
+                    Result = null
+                };
+            }
+
+
+
         }
 
         public Task<Response<Roles>> UpdateRol(Roles incapacidad)
