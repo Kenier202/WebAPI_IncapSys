@@ -57,9 +57,36 @@ namespace IncapSys.Services.RolServices
             }
         }
 
-        public Task<Response<Roles>> Delete(int id)
+        public async Task<Response<Roles>> Delete(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var response = await _RolRepositoryService.DeleteRol(id);
+
+                if (response == null) return new Response<Roles>
+                {
+                    IsSucces = response.IsSucces,
+                    Message = response.Message,
+                    Result = response.Result
+                };
+
+                return new Response<Roles>
+                {
+                    IsSucces = response.IsSucces,
+                    Message = response.Message,
+                    Result = response.Result
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Response<Roles>
+                {
+                    IsSucces = false,
+                    Message = ex.Message,
+                    Result = null
+                };
+
+            }
         }
 
         public Task<Response<bool>> ExisteRol(int idUsuario)
