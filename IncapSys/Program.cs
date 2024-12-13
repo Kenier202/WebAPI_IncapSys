@@ -1,8 +1,6 @@
-using IncapSys.Helpers;
 using IncapSys.Interfaces.Incapacidades;
 using IncapSys.Interfaces.Rol;
 using IncapSys.Interfaces.Usuarios;
-using IncapSys.Mapper.Rol;
 using IncapSys.Mapper.Usuarios;
 using IncapSys.Models;
 using IncapSys.Models.Incapacidades;
@@ -46,10 +44,7 @@ builder.Services.AddScoped<IRolService, RolService>();
 builder.Services.AddScoped<IRolRepository<Roles>, RolRepositoryService>();
 
 
-builder.Services.AddAutoMapper(typeof(MappingProfileUsuarios));
-builder.Services.AddAutoMapper(typeof(MapperIncapacidad));
-builder.Services.AddAutoMapper(typeof(MapperRol));
-
+builder.Services.AddAutoMapper(typeof(MappingProfileUsuarios)); 
 
 var app = builder.Build();
 
