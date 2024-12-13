@@ -67,9 +67,54 @@ namespace IncapSys.Services.IncapacidadesServices
             }
         }
 
-        public Task<Response<DescripcionIncapacidad>> DeleteIncapacidad(int id)
+        public async Task<Response<DescripcionIncapacidad>> DeleteIncapacidad(int id)
         {
-            throw new NotImplementedException();
+            var incapacidad = await _DbContext.Incapacidades.FindAsync(id);
+
+            if (incapacidad == null) return new Response<DescripcionIncapacidad>
+            {
+                IsSucces = false,
+                Message = "Rellene los datos",
+                Result = null
+            };
+
+            try
+            {
+                _DbContext.Remove(incapacidad);
+                var result = await _DbContext.SaveChangesAsync();
+
+                if (result < 0) return new Response<DescripcionIncapacidad>
+                {
+                    IsSucces = false,
+                    Message = "Incapacidad no encontrada",
+                    Result = null
+                };
+
+                return new Response<DescripcionIncapacidad>
+                {
+                    IsSucces = true,
+                    Message = "Incapacidad eliminada",
+                    Result = incapacidad
+                };
+            }
+            catch (DbException dbEx) 
+            {
+                return new Response<DescripcionIncapacidad>
+                {
+                    IsSucces = false,
+                    Message = dbEx.Message,
+                    Result = null
+                };
+            }
+            catch (Exception ex) 
+            {
+                return new Response<DescripcionIncapacidad>
+                {
+                    IsSucces = false,
+                    Message = ex.Message,
+                    Result = null
+                };
+            }
         }
 
         public Task<IEnumerable<DescripcionIncapacidad>> GetAllIncapacidades()
