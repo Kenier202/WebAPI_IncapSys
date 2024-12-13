@@ -25,16 +25,5 @@ namespace IncapSys.Controllers.Incapacidades
             return StatusCode(StatusCodes.Status204NoContent, response);
 
         }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> delete(int id)
-        {
-            var response = await _incapacidadesService.Delete(id);
-            if (response.IsSucces)
-            {
-                return StatusCode(StatusCodes.Status200OK, response);
-            }
-            return StatusCode(StatusCodes.Status204NoContent, response);
-        }
     }
 }

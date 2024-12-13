@@ -4,7 +4,6 @@ using IncapSys.Models;
 using IncapSys.Models.Incapacidades;
 using IncapSys.Models.Usuarios;
 using IncapSys.Repositories.Incapacidades;
-using Microsoft.EntityFrameworkCore;
 using System.Data.Common;
 
 namespace IncapSys.Services.IncapacidadesServices
@@ -68,61 +67,9 @@ namespace IncapSys.Services.IncapacidadesServices
             }
         }
 
-        public async Task<Response<DescripcionIncapacidad>> DeleteIncapacidad(int id)
+        public Task<Response<DescripcionIncapacidad>> DeleteIncapacidad(int id)
         {
-            if (id <= 0) return new Response<DescripcionIncapacidad> {
-                IsSucces = false,
-                Message = "",
-                Result = null
-            };
-
-            try
-            {
-                var incapacidad = await _DbContext.Incapacidades.FirstOrDefaultAsync(x => x.Id == id);
-
-                if (incapacidad == null) return new Response<DescripcionIncapacidad> {
-                    IsSucces = false,
-                    Message  = "Incapacidad no encontrada",
-                    Result   = null
-                };
-
-                _DbContext.Incapacidades.Remove(incapacidad);
-                var result = await _DbContext.SaveChangesAsync();
-
-                if (result < 0) 
-                {
-                    return new Response<DescripcionIncapacidad>
-                    {
-                        IsSucces = false,
-                        Message = "Error al eliminar incapacidad",
-                        Result = null
-                    };
-                }
-
-                return new Response<DescripcionIncapacidad> {
-                    IsSucces = true,
-                    Message  = "Incapacidad de eliminada",
-                    Result   = incapacidad
-                };
-            }
-            catch (DbException dbEx) 
-            {
-                return new Response<DescripcionIncapacidad>
-                {
-                    IsSucces = false,
-                    Message = dbEx.Message,
-                    Result = null
-                };
-            }
-            catch (Exception ex) 
-            {
-                return new Response<DescripcionIncapacidad>
-                {
-                    IsSucces = false,
-                    Message = ex.Message,
-                    Result = null
-                };
-            }
+            throw new NotImplementedException();
         }
 
         public Task<IEnumerable<DescripcionIncapacidad>> GetAllIncapacidades()
