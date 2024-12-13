@@ -38,13 +38,6 @@ namespace IncapSys.Services.IncapacidadesServices
                 var response = await _repositoryService.AddIncapacidad(incapacidad);
 
                 var result = _mapper.Map<IncapacidadesDto>(response);
-                //var result = new IncapacidadesDto()
-                //{
-                //    UsuarioId = response.Result.Id,
-                //    Descripcion = response.Result.Descripcion,
-                //    FechaSuceso = response.Result.FechaSuceso,
-                //    LugarAccidente = response.Result.LugarAccidente,
-                //};
 
                 if (!response.IsSucces) return new Response<IncapacidadesDto>
                 {
@@ -70,9 +63,44 @@ namespace IncapSys.Services.IncapacidadesServices
             }
         }
 
-        public Task<Response<IncapacidadesDto>> Delete(int id)
+        public async Task<Response<IncapacidadesDto>> Delete(int id)
         {
-            throw new NotImplementedException();
+            if (id < 0) return new Response<IncapacidadesDto>
+            {
+                IsSucces = false,
+                Message = "Ingresa un Id correcto",
+                Result = null
+            };
+
+            try
+            {
+                var response = await _repositoryService.DeleteIncapacidad(id);
+
+                var result   = _mapper.Map<IncapacidadesDto>(response);
+
+                if (!response.IsSucces) return new Response<IncapacidadesDto>
+                {
+                    IsSucces = response.IsSucces,
+                    Message  = response.Message,
+                    Result   = result,
+                };
+
+                return new Response<IncapacidadesDto>
+                {
+                    IsSucces = response.IsSucces,
+                    Message  = response.Message,
+                    Result   = result,
+                };
+            }
+            catch (Exception ex) 
+            {
+                return new Response<IncapacidadesDto>
+                {
+                    IsSucces = false,
+                    Message  = ex.Message,
+                    Result   = null
+                };
+            }
         }
 
         public Task<Response<bool>> ExisteIncapacidad(int idUsuario)
