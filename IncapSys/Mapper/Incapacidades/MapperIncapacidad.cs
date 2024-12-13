@@ -13,6 +13,9 @@ namespace IncapSys.Mapper.Incapacidades
                .ForMember(dest => dest.Descripcion, opt => opt.MapFrom(src => src.Result.Descripcion))
                .ForMember(dest => dest.FechaSuceso, opt => opt.MapFrom(src => src.Result.FechaSuceso))
                .ForMember(dest => dest.UsuarioId, opt => opt.MapFrom(src => src.Result.UsuarioId));
+
+            CreateMap<IncapacidadesAddDto, DescripcionIncapacidad>()
+                .ForMember(dest => dest.FechaSuceso, opt => opt.MapFrom(src => DateTime.Now));
         }  
     }
 }
