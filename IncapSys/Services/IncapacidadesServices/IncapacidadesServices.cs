@@ -7,6 +7,7 @@ using IncapSys.Interfaces.Incapacidades;
 using IncapSys.Models.Incapacidades;
 using IncapSys.Models.Usuarios;
 using IncapSys.Repositories.Incapacidades;
+using System.Data.Common;
 
 namespace IncapSys.Services.IncapacidadesServices
 {
@@ -38,13 +39,6 @@ namespace IncapSys.Services.IncapacidadesServices
                 var response = await _repositoryService.AddIncapacidad(incapacidad);
 
                 var result = _mapper.Map<IncapacidadesDto>(response);
-                //var result = new IncapacidadesDto()
-                //{
-                //    UsuarioId = response.Result.Id,
-                //    Descripcion = response.Result.Descripcion,
-                //    FechaSuceso = response.Result.FechaSuceso,
-                //    LugarAccidente = response.Result.LugarAccidente,
-                //};
 
                 if (!response.IsSucces) return new Response<IncapacidadesDto>
                 {
@@ -70,9 +64,44 @@ namespace IncapSys.Services.IncapacidadesServices
             }
         }
 
-        public Task<Response<IncapacidadesDto>> Delete(int id)
+        public async Task<Response<IncapacidadesDto>> Delete(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var response    = await _repositoryService.DeleteIncapacidad(id);
+
+                var incapacidad = _mapper.Map<IncapacidadesDto>(response);
+
+                if (!response.IsSucces) return new Response<IncapacidadesDto>
+                {
+                    IsSucces = response.IsSucces,
+                    Message  = response.Message,
+                    Result   = incapacidad
+                };
+
+                return new Response<IncapacidadesDto>
+                {
+                    IsSucces = response.IsSucces,
+                    Message  = response.Message,
+                    Result   = incapacidad
+                };
+            }
+            catch (DbException dbEx) {
+                return new Response<IncapacidadesDto>
+                {
+                    IsSucces = false,
+                    Message  = dbEx.Message,
+                    Result   = null
+                };
+            }
+            catch (Exception ex) {
+                return new Response<IncapacidadesDto>
+                {
+                    IsSucces = false,
+                    Message  = ex.Message,
+                    Result   = null
+                };
+            }
         }
 
         public Task<Response<bool>> ExisteIncapacidad(int idUsuario)
