@@ -36,5 +36,16 @@ namespace IncapSys.Controllers.Incapacidades
             }
             return StatusCode(StatusCodes.Status204NoContent, response);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> getAll()
+        {
+            var response = await _incapacidadesService.getAll();
+            if (response.IsSucces)
+            {
+                return StatusCode(StatusCodes.Status200OK, response);
+            }
+            return StatusCode(StatusCodes.Status204NoContent, response);
+        }
     }
 }
