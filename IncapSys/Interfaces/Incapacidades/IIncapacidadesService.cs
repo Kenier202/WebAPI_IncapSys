@@ -6,10 +6,10 @@ using IncapSys.Models.Usuarios;
 
 namespace IncapSys.Interfaces.Incapacidades
 {
-    public interface IIncapacidadesService : IBaseInterface<Empleados>
+    public interface IIncapacidadesService : IBaseInterface<IncapacidadesDto>
     {
         Task<Response<bool>> ExisteIncapacidad(int idUsuario);
-        public Task<Response<DescripcionIncapacidad>> CreateAt(IncapacidadesAddDto model);
-        public Task<Response<DescripcionIncapacidad>> Actualizar(IncapacidadesUpdateDto model);
+        public Task<Response<IncapacidadesDto>> CreateAt(IncapacidadesAddDto model);
+        public Task<Response<IncapacidadesDto>> Actualizar(IncapacidadesUpdateDto model);
     }
 }
