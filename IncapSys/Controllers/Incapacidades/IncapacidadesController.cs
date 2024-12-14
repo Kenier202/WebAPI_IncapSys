@@ -4,6 +4,7 @@ using IncapSys.Interfaces.Incapacidades;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using static IncapSys.ViewModels.Incapacidades.AgregarIncapacidad;
+using static IncapSys.ViewModels.Incapacidades.UpdateIncapacidad;
 
 namespace IncapSys.Controllers.Incapacidades
 {
@@ -70,9 +71,10 @@ namespace IncapSys.Controllers.Incapacidades
         }
 
         [HttpPatch]
-        public async Task<IActionResult> UpdateAt(IncapacidadesUpdateDto UpdateIncapacidad)
+        public async Task<IActionResult> UpdateAt([FromBody] UpdateIncapacidadViewModel UpdateIncapacidad)
         {
-            var response = await _incapacidadesService.Actualizar(UpdateIncapacidad);
+            var incapacidad = _MappingUsuarios.Map<IncapacidadesUpdateDto>(UpdateIncapacidad);
+            var response = await _incapacidadesService.Actualizar(incapacidad);
             if (response.IsSucces)
             {
                 return StatusCode(StatusCodes.Status202Accepted, response);
