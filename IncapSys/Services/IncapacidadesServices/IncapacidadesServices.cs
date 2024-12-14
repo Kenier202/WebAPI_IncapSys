@@ -19,7 +19,42 @@ namespace IncapSys.Services.IncapacidadesServices
             this._repositoryService = incapacidadesRepository;
         }
 
-        public Task<Response<IncapacidadesDto>> Actualizar(IncapacidadesUpdateDto UpdateIncapacidad)
+        public async Task<Response<IncapacidadesDto>> Actualizar(IncapacidadesUpdateDto UpdateIncapacidad)
+        {
+            try
+            {
+                var incapacidad = _mapper.Map<DescripcionIncapacidad>(UpdateIncapacidad);
+
+                var response = await _repositoryService.UpdateIncapacidad(incapacidad);
+
+                var result = _mapper.Map<IncapacidadesDto>(response);
+
+                if (!response.IsSucces) return new Response<IncapacidadesDto>
+                {
+                    IsSucces = response.IsSucces,
+                    Message = response.Message,
+                    Result = result
+                };
+
+                return new Response<IncapacidadesDto>
+                {
+                    IsSucces = true,
+                    Message = response.Message,
+                    Result = result,
+                };
+            }
+            catch (Exception ex) 
+            {
+               return new Response<IncapacidadesDto>
+                {
+                    IsSucces = false,
+                    Message = ex.Message,
+                    Result = null
+                };
+            }
+        }
+
+        public Task<Response<bool>> ExisteIncapacidad(int idUsuario)
         {
             throw new NotImplementedException();
         }
@@ -170,12 +205,6 @@ namespace IncapSys.Services.IncapacidadesServices
                 };
             }
         }
-
-        public Task<Response<bool>> ExisteIncapacidad(int idUsuario)
-        {
-            throw new NotImplementedException();
-        }
-
     }
 }
 
