@@ -11,10 +11,8 @@ namespace IncapSys.Services.RolServices
     public class RolRepositoryService : IRolRepository<Roles>
     {
         private readonly ApplicationDbContext _DbContext;
-        private readonly IMapper _Mapper;
         public RolRepositoryService(ApplicationDbContext dbContext, IMapper Mapper) {
             this._DbContext = dbContext;
-            this._Mapper = Mapper;
         }
 
         async public Task<Response<IEnumerable<Roles>>> GetAllRoles()
