@@ -3,6 +3,7 @@ using IncapSys.DTOs.Incapacidades;
 using IncapSys.Helpers;
 using IncapSys.Models.Incapacidades;
 using static IncapSys.ViewModels.Incapacidades.AgregarIncapacidad;
+using static IncapSys.ViewModels.Incapacidades.UpdateIncapacidad;
 
 namespace IncapSys.Mapper.Incapacidades
 {
@@ -26,7 +27,9 @@ namespace IncapSys.Mapper.Incapacidades
               .ForMember(dest => dest.FechaSuceso, opt => opt.MapFrom(src => DateTime.Now));
 
             CreateMap<AgregarIncapacidadViewModel, IncapacidadesAddDto>();
+            CreateMap<UpdateIncapacidadViewModel, IncapacidadesUpdateDto>();
 
-        }  
+
+        }
     }
 }
