@@ -15,7 +15,7 @@ namespace IncapSys.Controllers.Incapacidades
         }
 
         [HttpPost]
-        public async Task<IActionResult> createAt(IncapacidadesAddDto AddIncapacidad)
+        public async Task<IActionResult> CreateAt(IncapacidadesAddDto AddIncapacidad)
         {
             var response = await _incapacidadesService.CreateAt(AddIncapacidad);
             if (response.IsSucces)
@@ -27,7 +27,7 @@ namespace IncapSys.Controllers.Incapacidades
         }
 
         [HttpDelete]
-        public async Task<IActionResult> delete (int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var response = await _incapacidadesService.Delete(id);
             if (response.IsSucces)
@@ -38,9 +38,20 @@ namespace IncapSys.Controllers.Incapacidades
         }
 
         [HttpGet]
-        public async Task<IActionResult> getAll()
+        public async Task<IActionResult> GetAll()
         {
             var response = await _incapacidadesService.getAll();
+            if (response.IsSucces)
+            {
+                return StatusCode(StatusCodes.Status200OK, response);
+            }
+            return StatusCode(StatusCodes.Status204NoContent, response);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById( int id )
+        {
+            var response = await _incapacidadesService.GetById( id );
             if (response.IsSucces)
             {
                 return StatusCode(StatusCodes.Status200OK, response);
