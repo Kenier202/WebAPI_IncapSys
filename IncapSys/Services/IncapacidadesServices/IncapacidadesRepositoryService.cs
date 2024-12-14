@@ -3,7 +3,6 @@ using IncapSys.DTOs.Incapacidades;
 using IncapSys.Helpers;
 using IncapSys.Models;
 using IncapSys.Models.Incapacidades;
-using IncapSys.Models.Usuarios;
 using IncapSys.Repositories.Incapacidades;
 using Microsoft.EntityFrameworkCore;
 using System.Data.Common;
@@ -23,16 +22,16 @@ namespace IncapSys.Services.IncapacidadesServices
 
         public async Task<Response<DescripcionIncapacidad>> AddIncapacidad(DescripcionIncapacidad incapacidad)
         {
-            if ( incapacidad == null ) return new Response<DescripcionIncapacidad>
+            if (incapacidad == null) return new Response<DescripcionIncapacidad>
             {
                 IsSucces = false,
-                Message  = "Faltan datos",
-                Result   = null
+                Message = "Faltan datos",
+                Result = null
             };
 
             try
             {
-                await _DbContext.AddAsync( incapacidad );
+                await _DbContext.AddAsync(incapacidad);
                 var result = await _DbContext.SaveChangesAsync();
 
                 if (result < 0) return new Response<DescripcionIncapacidad>
@@ -42,23 +41,23 @@ namespace IncapSys.Services.IncapacidadesServices
                     Result = null
                 };
 
-                return new Response<DescripcionIncapacidad> 
+                return new Response<DescripcionIncapacidad>
                 {
                     IsSucces = true,
-                    Message  = "Incapacidad registrada con exito",
-                    Result   = incapacidad
+                    Message = "Incapacidad registrada con exito",
+                    Result = incapacidad
                 };
             }
             catch (DbException dbEx)
             {
-                return new Response<DescripcionIncapacidad> 
+                return new Response<DescripcionIncapacidad>
                 {
                     IsSucces = false,
-                    Message  = dbEx.Message,
-                    Result   = null
+                    Message = dbEx.Message,
+                    Result = null
                 };
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 return new Response<DescripcionIncapacidad>
                 {
@@ -99,7 +98,7 @@ namespace IncapSys.Services.IncapacidadesServices
                     Result = incapacidad
                 };
             }
-            catch (DbException dbEx) 
+            catch (DbException dbEx)
             {
                 return new Response<DescripcionIncapacidad>
                 {
@@ -108,7 +107,7 @@ namespace IncapSys.Services.IncapacidadesServices
                     Result = null
                 };
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 return new Response<DescripcionIncapacidad>
                 {
@@ -121,7 +120,7 @@ namespace IncapSys.Services.IncapacidadesServices
 
         public async Task<Response<IEnumerable<DescripcionIncapacidad>>> GetAllIncapacidades()
         {
-             try
+            try
             {
                 var incapacidades = await _DbContext.Incapacidades.Include(u => u.usuario).ToListAsync();
 
@@ -138,8 +137,8 @@ namespace IncapSys.Services.IncapacidadesServices
                     Message = "Incapacidades encontradas",
                     Result = incapacidades
                 };
-             }
-            catch (Exception ex) 
+            }
+            catch (Exception ex)
             {
                 return new Response<IEnumerable<DescripcionIncapacidad>>
                 {
@@ -172,7 +171,7 @@ namespace IncapSys.Services.IncapacidadesServices
                     Result = incapacidad
                 };
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 return new Response<DescripcionIncapacidad>
                 {
@@ -183,9 +182,63 @@ namespace IncapSys.Services.IncapacidadesServices
             }
         }
 
-        public Task<Response<DescripcionIncapacidad>> UpdateIncapacidad(DescripcionIncapacidad incapacidad)
+        public async Task<Response<DescripcionIncapacidad>> UpdateIncapacidad(DescripcionIncapacidad incapacidad)
         {
-            throw new NotImplementedException();
+            if (incapacidad == null) return new Response<DescripcionIncapacidad>
+            {
+                IsSucces = false,
+                Message = "Rellene los datos",
+                Result = null
+            };
+
+            try
+            {
+                // Verifica si la entidad ya existe en la base de datos.
+                var existingIncapacidad = await _DbContext.Incapacidades
+                    .FirstOrDefaultAsync(i => i.Id == incapacidad.Id);
+
+                if (existingIncapacidad == null)
+                {
+                    return new Response<DescripcionIncapacidad>
+                    {
+                        IsSucces = false,
+                        Message = "Incapacidad no encontrada.",
+                        Result = null
+                    };
+                }
+
+                // Si existe, actualiza los valores de la entidad.
+                _DbContext.Entry(existingIncapacidad).CurrentValues.SetValues(incapacidad);
+                _DbContext.Entry(existingIncapacidad).State = EntityState.Modified;
+
+                var result = await _DbContext.SaveChangesAsync();
+
+                if (result < 0)
+                {
+                    return new Response<DescripcionIncapacidad>
+                    {
+                        IsSucces = false,
+                        Message = "Error al guardar",
+                        Result = null
+                    };
+                }
+
+                return new Response<DescripcionIncapacidad>
+                {
+                    IsSucces = true,
+                    Message = "Incapacidad actualizada",
+                    Result = existingIncapacidad
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Response<DescripcionIncapacidad>
+                {
+                    IsSucces = false,
+                    Message = ex.Message,
+                    Result = null
+                };
+            }
         }
 
     }
