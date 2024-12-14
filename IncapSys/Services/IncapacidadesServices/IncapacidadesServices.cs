@@ -98,11 +98,6 @@ namespace IncapSys.Services.IncapacidadesServices
             }
         }
 
-        public Task<Response<bool>> ExisteIncapacidad(int idUsuario)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<Response<IEnumerable<IncapacidadesDto>>> getAll()
         {
             try
@@ -136,11 +131,51 @@ namespace IncapSys.Services.IncapacidadesServices
                 };
             }
         }
+        public async Task<Response<IncapacidadesDto>> GetById(int id)
+        {
+            if (id == 0) return new Response<IncapacidadesDto>
+            {
+                IsSucces = false,
+                Message = "Ingresa un id mayor a 0",
+                Result = null
+            };
 
-        public Task<Response<IncapacidadesDto>> GetById(int id)
+            try
+            {
+                var response = await _repositoryService.GetIncapacidadesById(id);
+
+                var incapacidad = _mapper.Map<IncapacidadesDto>(response.Result);
+
+                if (!response.IsSucces) return new Response<IncapacidadesDto>
+                {
+                    IsSucces = response.IsSucces,
+                    Message  = response.Message,
+                    Result   = incapacidad
+                };
+
+                return new Response<IncapacidadesDto>
+                {
+                    IsSucces = response.IsSucces,
+                    Message = response.Message,
+                    Result = incapacidad
+                };
+            }
+            catch (Exception ex) 
+            {
+                return new Response<IncapacidadesDto>
+                {
+                    IsSucces = false,
+                    Message = ex.Message,
+                    Result = null
+                };
+            }
+        }
+
+        public Task<Response<bool>> ExisteIncapacidad(int idUsuario)
         {
             throw new NotImplementedException();
         }
+
     }
 }
 
