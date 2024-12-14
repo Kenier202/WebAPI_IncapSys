@@ -13,13 +13,13 @@ namespace IncapSys.Services.IncapacidadesServices
     public class IncapacidadesServices : IIncapacidadesService
     {
         private readonly IMapper _mapper;
-        IIncapacidadesRepository<DescripcionIncapacidad> _repositoryService;
+        private readonly IIncapacidadesRepository<DescripcionIncapacidad> _repositoryService;
         public IncapacidadesServices(IMapper Mapper, IIncapacidadesRepository<DescripcionIncapacidad> incapacidadesRepository) {
             this._mapper = Mapper;
             this._repositoryService = incapacidadesRepository;
         }
 
-        public Task<Response<IncapacidadesDto>> Actualizar(IncapacidadesUpdateDto model)
+        public Task<Response<IncapacidadesDto>> Actualizar(IncapacidadesUpdateDto UpdateIncapacidad)
         {
             throw new NotImplementedException();
         }

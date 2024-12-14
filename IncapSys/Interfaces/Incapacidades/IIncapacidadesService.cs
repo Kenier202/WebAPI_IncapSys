@@ -9,7 +9,7 @@ namespace IncapSys.Interfaces.Incapacidades
     public interface IIncapacidadesService : IBaseInterface<IncapacidadesDto>
     {
         Task<Response<bool>> ExisteIncapacidad(int idUsuario);
-        public Task<Response<IncapacidadesDto>> CreateAt(IncapacidadesAddDto model);
-        public Task<Response<IncapacidadesDto>> Actualizar(IncapacidadesUpdateDto model);
+        public Task<Response<IncapacidadesDto>> CreateAt(IncapacidadesAddDto AddIncapacidad);
+        public Task<Response<IncapacidadesDto>> Actualizar(IncapacidadesUpdateDto UpdateIncapacidad);
     }
 }
