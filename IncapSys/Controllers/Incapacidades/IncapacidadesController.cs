@@ -59,5 +59,16 @@ namespace IncapSys.Controllers.Incapacidades
             }
             return StatusCode(StatusCodes.Status400BadRequest, response);
         }
+
+        [HttpPatch]
+        public async Task<IActionResult> UpdateAt(IncapacidadesUpdateDto UpdateIncapacidad)
+        {
+            var response = await _incapacidadesService.Actualizar(UpdateIncapacidad);
+            if (response.IsSucces)
+            {
+                return StatusCode(StatusCodes.Status202Accepted, response);
+            }
+            return StatusCode(StatusCodes.Status400BadRequest, response);
+        }
     }
 }
