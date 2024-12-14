@@ -150,9 +150,37 @@ namespace IncapSys.Services.IncapacidadesServices
             }
         }
 
-        public Task<Response<DescripcionIncapacidad>> GetIncapacidadesById(int id)
+        public async Task<Response<DescripcionIncapacidad>> GetIncapacidadesById(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var incapacidad = await _DbContext.Incapacidades
+                                                    .Include(u => u.usuario)
+                                                    .FirstOrDefaultAsync(i => i.Id == id);
+
+                if (incapacidad == null) return new Response<DescripcionIncapacidad>
+                {
+                    IsSucces = false,
+                    Message = "No se encontro incapacidad",
+                    Result = null
+                };
+
+                return new Response<DescripcionIncapacidad>
+                {
+                    IsSucces = true,
+                    Message = "Incapacidad encontrada",
+                    Result = incapacidad
+                };
+            }
+            catch (Exception ex) 
+            {
+                return new Response<DescripcionIncapacidad>
+                {
+                    IsSucces = false,
+                    Message = ex.Message,
+                    Result = null
+                };
+            }
         }
 
         public Task<Response<DescripcionIncapacidad>> UpdateIncapacidad(DescripcionIncapacidad incapacidad)
