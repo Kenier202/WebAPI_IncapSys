@@ -46,9 +46,10 @@ namespace IncapSys.Controllers.Usuarios
             var UsuarioDto = _MappingUsuarios.Map<UsuarioAddDto>(usuario);
 
             var response = await _UsuarioService.CreateAt(UsuarioDto);
+
             if (response.IsSucces)
             {
-                return StatusCode(StatusCodes.Status200OK, response);
+                return CreatedAtAction(nameof(GetById), new {Id = response.Result.Id}, response);
             }
             return StatusCode(StatusCodes.Status404NotFound, response);
         }
