@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using IncapSys.DTOs.Incapacidades;
 using IncapSys.Helpers;
 using IncapSys.Models;
 using IncapSys.Models.Incapacidades;
 using IncapSys.Models.Usuarios;
 using IncapSys.Repositories.Incapacidades;
+using Microsoft.EntityFrameworkCore;
 using System.Data.Common;
 
 namespace IncapSys.Services.IncapacidadesServices
@@ -117,9 +119,35 @@ namespace IncapSys.Services.IncapacidadesServices
             }
         }
 
-        public Task<IEnumerable<DescripcionIncapacidad>> GetAllIncapacidades()
+        public async Task<Response<IEnumerable<DescripcionIncapacidad>>> GetAllIncapacidades()
         {
-            throw new NotImplementedException();
+             try
+            {
+                var incapacidades = await _DbContext.Incapacidades.Include(u => u.usuario).ToListAsync();
+
+                if (incapacidades == null) return new Response<IEnumerable<DescripcionIncapacidad>>
+                {
+                    IsSucces = false,
+                    Message = "Incapacidades no encontradas",
+                    Result = null
+                };
+
+                return new Response<IEnumerable<DescripcionIncapacidad>>
+                {
+                    IsSucces = true,
+                    Message = "Incapacidades encontradas",
+                    Result = incapacidades
+                };
+             }
+            catch (Exception ex) 
+            {
+                return new Response<IEnumerable<DescripcionIncapacidad>>
+                {
+                    IsSucces = false,
+                    Message = ex.Message,
+                    Result = null
+                };
+            }
         }
 
         public Task<Response<DescripcionIncapacidad>> GetIncapacidadesById(int id)
@@ -131,5 +159,6 @@ namespace IncapSys.Services.IncapacidadesServices
         {
             throw new NotImplementedException();
         }
+
     }
 }
