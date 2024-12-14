@@ -85,6 +85,13 @@ namespace IncapSys.Services.UsuariosServices
 
                 var result = await _DbContext.SaveChangesAsync();
 
+                if (result < 0) return new Response<Empleados>
+                {
+                    IsSucces = false,
+                    Message  = "No se encontraron usuarios",
+                    Result   = null
+                };
+
                 return new Response<Empleados>{
                     IsSucces = true,
                     Message = "Usuario actualizado con exito",
