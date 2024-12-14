@@ -10,7 +10,8 @@ namespace IncapSys.Controllers.Incapacidades
     public class IncapacidadesController : ControllerBase
     {
         private readonly IIncapacidadesService _incapacidadesService;
-        public IncapacidadesController(IIncapacidadesService incapacidadesService) {
+        public IncapacidadesController(IIncapacidadesService incapacidadesService)
+        {
             this._incapacidadesService = incapacidadesService;
         }
 
@@ -20,9 +21,9 @@ namespace IncapSys.Controllers.Incapacidades
             var response = await _incapacidadesService.CreateAt(AddIncapacidad);
             if (response.IsSucces)
             {
-                return StatusCode(StatusCodes.Status200OK, response);
+                return CreatedAtAction(nameof(GetById), new {Id = response.Result.Id}, response);
             }
-            return StatusCode(StatusCodes.Status204NoContent, response);
+            return StatusCode(StatusCodes.Status400BadRequest, response);
 
         }
 
@@ -34,7 +35,7 @@ namespace IncapSys.Controllers.Incapacidades
             {
                 return StatusCode(StatusCodes.Status200OK, response);
             }
-            return StatusCode(StatusCodes.Status204NoContent, response);
+            return StatusCode(StatusCodes.Status400BadRequest, response);
         }
 
         [HttpGet]
@@ -45,18 +46,18 @@ namespace IncapSys.Controllers.Incapacidades
             {
                 return StatusCode(StatusCodes.Status200OK, response);
             }
-            return StatusCode(StatusCodes.Status204NoContent, response);
+            return StatusCode(StatusCodes.Status400BadRequest, response);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById( int id )
+        public async Task<IActionResult> GetById(int id)
         {
-            var response = await _incapacidadesService.GetById( id );
+            var response = await _incapacidadesService.GetById(id);
             if (response.IsSucces)
             {
                 return StatusCode(StatusCodes.Status200OK, response);
             }
-            return StatusCode(StatusCodes.Status204NoContent, response);
+            return StatusCode(StatusCodes.Status400BadRequest, response);
         }
     }
 }
