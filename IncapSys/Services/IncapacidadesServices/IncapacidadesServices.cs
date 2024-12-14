@@ -28,13 +28,8 @@ namespace IncapSys.Services.IncapacidadesServices
         {
             try
             {
-                //var incapacidad = _mapper.Map<DescripcionIncapacidad>(AddIncapacidad);
-                var incapacidad = new DescripcionIncapacidad() {
-                    Descripcion = AddIncapacidad.Descripcion,
-                    LugarAccidente = AddIncapacidad.LugarAccidente,
-                    FechaSuceso = DateTime.Now,
-                    UsuarioId = AddIncapacidad.UsuarioId
-                };
+                var incapacidad = _mapper.Map<DescripcionIncapacidad>(AddIncapacidad);
+        
                 var response = await _repositoryService.AddIncapacidad(incapacidad);
 
                 var result = _mapper.Map<IncapacidadesDto>(response);
@@ -108,9 +103,38 @@ namespace IncapSys.Services.IncapacidadesServices
             throw new NotImplementedException();
         }
 
-        public Task<Response<IEnumerable<IncapacidadesDto>>> getAll()
+        public async Task<Response<IEnumerable<IncapacidadesDto>>> getAll()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var incapacidades = await _repositoryService.GetAllIncapacidades();
+
+                if (incapacidades == null || !incapacidades.IsSucces) return new Response<IEnumerable<IncapacidadesDto>>
+                {
+                    IsSucces = false,
+                    Message  = "Rellene los campos",
+                    Result   = null
+                };
+
+                var result = _mapper.Map<IEnumerable<IncapacidadesDto>>(incapacidades.Result);
+
+                return new Response<IEnumerable<IncapacidadesDto>>
+                {
+                    IsSucces = incapacidades.IsSucces,
+                    Message = incapacidades.Message,
+                    Result = result
+                };
+
+
+            }
+            catch (Exception ex) {
+                return new Response<IEnumerable<IncapacidadesDto>>
+                {
+                    IsSucces = false,
+                    Message = ex.Message,
+                    Result = null
+                };
+            }
         }
 
         public Task<Response<IncapacidadesDto>> GetById(int id)
