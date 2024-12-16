@@ -1,4 +1,5 @@
-﻿using IncapSys.Helpers;
+﻿using IncapSys.DTOs.Usuarios;
+using IncapSys.Helpers;
 using IncapSys.Models;
 using IncapSys.Models.Usuarios;
 using IncapSys.Repositories.Usuarios;
@@ -156,7 +157,34 @@ namespace IncapSys.Services.UsuariosServices
             }
         }
 
-  
-    
+        public async Task<UsuarioLoginDto> VerifyUser(UsuarioLoginDto login)
+        {
+            try
+            {
+                // Buscar al usuario por nombre de usuario (Usuario)
+                var user = await _DbContext.Usuarios
+                    .FirstOrDefaultAsync(u => u.Usuario == login.Usuario); // O el nombre de campo correspondiente en tu base de datos
+
+                if (user == null)
+                {
+                    return null; // Usuario no encontrado
+                }
+
+                // Retorna si la contraseña es válida
+                return new UsuarioLoginDto() {
+                    Usuario = login.Usuario,
+                    RolId   = login.RolId,
+                }; 
+            }
+            catch (Exception ex)
+            {
+                // Manejar cualquier excepción que pueda ocurrir durante el proceso
+                // Puedes registrar el error en un log o manejarlo de la manera que consideres.
+                // Por ejemplo:
+                Console.WriteLine($"Error al verificar el usuario: {ex.Message}");
+                return null; // Retorna false si ocurre algún error
+            }
+        }
+
     }
 }
