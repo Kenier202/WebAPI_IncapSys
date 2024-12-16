@@ -102,7 +102,27 @@ namespace IncapSys.Controllers.Usuarios
             return Ok(new {token = jwtToken});
         }
 
-        
+        private string GenerateToken(UsuarioLoginDto user)
+        {
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.Name, user.Usuario),
+                new Claim(ClaimTypes.Role, user.RolId.ToString())
+            };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_Configuration.GetSection("JWT:Key").Value));
+            var credencials = new SigningCredentials(key,SecurityAlgorithms.HmacSha256Signature);
+
+            var securityToken = new JwtSecurityToken(
+                    claims: claims,
+                    expires: DateTime.Now.AddMinutes(20),
+                    signingCredentials: credencials
+                );
+
+            string token = new JwtSecurityTokenHandler().WriteToken(securityToken);
+
+            return token;
+        }
 
     }
 }
