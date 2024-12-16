@@ -9,6 +9,8 @@ namespace IncapSys.Interfaces.Usuarios
         Task<Response<bool>> ExisteUsuario(int idUsuario);
         Task<Response<Empleados>> CreateAt(UsuarioAddDto model);
         Task<Response<Empleados>> Actualizar(UsuarioUpdateDto model);
+        Task<UsuarioLoginDto> VerifyUser(UsuarioLoginDto login);
+
 
     }
 }
