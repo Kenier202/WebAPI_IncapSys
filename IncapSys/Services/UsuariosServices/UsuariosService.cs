@@ -151,5 +151,20 @@ namespace IncapSys.Services.UsuariosServices
                 Result = _usuariosResponse.Result,
             };
         }
+
+        public async Task<UsuarioLoginDto> VerifyUser(UsuarioLoginDto login)
+        {
+            if (login == null)
+            {
+                //throw new ArgumentNullException(nameof(login)); // Validar si el DTO está vacío
+                return null;
+            };
+
+            var verify = await _repositoryService.VerifyUser(login);
+
+            if (verify == null) return null;
+
+            return verify;
+        }
     }
 }
