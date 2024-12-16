@@ -3,6 +3,10 @@ using IncapSys.DTOs.Usuarios;
 using IncapSys.Interfaces.Usuarios;
 using IncapSys.ViewModels.Usuarios;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace IncapSys.Controllers.Usuarios
 {
@@ -10,12 +14,14 @@ namespace IncapSys.Controllers.Usuarios
     [ApiController]
     public class UsuariosController : ControllerBase
     {
-        public readonly IUsuarioService _UsuarioService;
-        public readonly IMapper _MappingUsuarios;
-        public UsuariosController(IUsuarioService _usuarios, IMapper mappingUsuarios)
+        private readonly IUsuarioService _UsuarioService;
+        private readonly IMapper _MappingUsuarios;
+        private IConfiguration _Configuration;
+        public UsuariosController(IUsuarioService _usuarios, IMapper mappingUsuarios, IConfiguration configuration)
         {
             _UsuarioService = _usuarios;
             _MappingUsuarios = mappingUsuarios;
+            _Configuration = configuration;
         }
         [HttpGet]
         async public Task<IActionResult> GetAll()
@@ -84,5 +90,20 @@ namespace IncapSys.Controllers.Usuarios
             return StatusCode(StatusCodes.Status404NotFound, response);
         }
 
+        [HttpPost("Authenticate")]
+        public async Task<IActionResult> Login(UsuarioLoginDto LoginDto)
+        {
+            var result = await _UsuarioService.VerifyUser(LoginDto);
+
+            if (result == null) return BadRequest(new {message = "Credenciales invalidas"});
+
+            string jwtToken = GenerateToken(result);
+            
+            return Ok(new {token = jwtToken});
+        }
+
+        
+
     }
 }
+ 
