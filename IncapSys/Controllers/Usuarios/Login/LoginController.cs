@@ -17,7 +17,7 @@ namespace IncapSys.Controllers.Usuarios.Login
     public class LoginController : ControllerBase
     {
         private readonly IUsuarioService _UsuarioService;
-        private IConfiguration _Configuration;
+        private readonly IConfiguration _Configuration;
         public LoginController(IUsuarioService UsuariosService, IConfiguration configuration)
         {
             _Configuration = configuration;

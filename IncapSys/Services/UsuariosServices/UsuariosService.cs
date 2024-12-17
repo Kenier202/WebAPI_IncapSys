@@ -158,7 +158,7 @@ namespace IncapSys.Services.UsuariosServices
             {
                 //throw new ArgumentNullException(nameof(login)); // Validar si el DTO está vacío
                 return null;
-            };
+            }
 
             var verify = await _repositoryService.VerifyUser(login);
 

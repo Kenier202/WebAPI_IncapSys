@@ -18,12 +18,10 @@ namespace IncapSys.Controllers.Usuarios
     {
         private readonly IUsuarioService _UsuarioService;
         private readonly IMapper _MappingUsuarios;
-        private IConfiguration _Configuration;
-        public UsuariosController(IUsuarioService _usuarios, IMapper mappingUsuarios, IConfiguration configuration)
+        public UsuariosController(IUsuarioService _usuarios, IMapper mappingUsuarios)
         {
             _UsuarioService = _usuarios;
             _MappingUsuarios = mappingUsuarios;
-            _Configuration = configuration;
         }
         [HttpGet]
         async public Task<IActionResult> GetAll()
