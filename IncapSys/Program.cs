@@ -12,7 +12,10 @@ using IncapSys.Repositories.Usuarios;
 using IncapSys.Services.IncapacidadesServices;
 using IncapSys.Services.RolServices;
 using IncapSys.Services.UsuariosServices;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,8 +46,20 @@ builder.Services.AddScoped<IRolService, RolService>();
 //repository roles
 builder.Services.AddScoped<IRolRepository<Roles>, RolRepositoryService>();
 
+builder.Services.AddAutoMapper(typeof(MappingProfileUsuarios));
 
-builder.Services.AddAutoMapper(typeof(MappingProfileUsuarios)); 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"])),
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        
+    };
+});
 
 var app = builder.Build();
 
@@ -57,6 +72,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
