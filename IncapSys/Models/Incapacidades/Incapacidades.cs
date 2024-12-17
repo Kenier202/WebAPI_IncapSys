@@ -2,6 +2,7 @@
 using IncapSys.Models.Usuarios;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace IncapSys.Models.Incapacidades
 {
@@ -13,11 +14,10 @@ namespace IncapSys.Models.Incapacidades
         public string Descripcion { get; set; }
         public DateTime FechaSuceso { get; set; }
 
-        // Clave foránea hacia la entidad Usuario
-        [ForeignKey("UsuarioId")]
+        // Relación con Empleados (uno a muchos)
         public int UsuarioId { get; set; }
-
-        // Propiedad de navegación hacia Usuario
-        public Empleados usuario { get; set; }
+        [JsonIgnore]
+        public Empleados Usuario { get; set; } // Nombre PascalCase
     }
+
 }
