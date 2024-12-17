@@ -10,16 +10,17 @@ namespace IncapSys.Models.Usuarios
         [Key]
         public int Id { get; set; }
         public string Usuario { get; set; }
+
         [MinLength(4)]
         public string Contraseña { get; set; }
         public DateTime FechaRegistro { get; set; }
 
-        [ForeignKey("RolId")]
+        // Relación con Rol (uno a muchos)
         public int RolId { get; set; }
         public Roles Rol { get; set; }
 
-        [ForeignKey("IncapacidadId")]
-        public int IncapacidadId { get; set; }
+        // Relación con DescripcionIncapacidad (uno a muchos)
         public ICollection<DescripcionIncapacidad> Incapacidades { get; set; }
     }
+
 }

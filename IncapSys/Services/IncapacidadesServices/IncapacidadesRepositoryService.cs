@@ -122,7 +122,7 @@ namespace IncapSys.Services.IncapacidadesServices
         {
             try
             {
-                var incapacidades = await _DbContext.Incapacidades.Include(u => u.usuario).ToListAsync();
+                var incapacidades = await _DbContext.Incapacidades.Include(u => u.Usuario).ToListAsync();
 
                 if (incapacidades == null) return new Response<IEnumerable<DescripcionIncapacidad>>
                 {
@@ -154,7 +154,7 @@ namespace IncapSys.Services.IncapacidadesServices
             try
             {
                 var incapacidad = await _DbContext.Incapacidades
-                                                    .Include(u => u.usuario)
+                                                    .Include(u => u.Usuario.Usuario)
                                                     .FirstOrDefaultAsync(i => i.Id == id);
 
                 if (incapacidad == null) return new Response<DescripcionIncapacidad>
